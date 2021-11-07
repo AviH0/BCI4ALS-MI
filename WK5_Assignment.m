@@ -21,6 +21,16 @@ MI2_preprocess(fileFolder);
 
 
 x=5;
-%% plot raw data x voltage
+%% plot raw data x voltage - GALINA
 
-%% PSD
+%% PSD - TALIA
+
+%% high-pass - AVINOAM
+
+%% low-pass - AVINOAM
+
+%% LaPlacian - YARDEN
+
+%% clean data vs raw -YARDEN
+
+%% advanced- if we have time
