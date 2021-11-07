@@ -1,7 +1,7 @@
 % Week 5 Assignment
 
 %% Add file paths
-userName = 'Galina'; % change to your username
+userName = 'Yarden'; % change to your username
 
 addpath(genpath('C:\Users\userName\Documents\MATLAB\liblsl-Matlab'))
 addpath(genpath('C:\Toolboxes'))
@@ -17,7 +17,10 @@ fileFolder = 'C:\Recordings\1_20211104'; %change for each subject
 
 %% read file
 MI2_preprocess(fileFolder);
+%%%%
 
+
+x=5;
 %% plot raw data x voltage
 
 %% PSD
