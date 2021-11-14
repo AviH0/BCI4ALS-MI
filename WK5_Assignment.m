@@ -19,16 +19,27 @@ MI2_preprocess(fileFolder);
 
 
 x=5;
-%% plot raw data x voltage - GALINA
 
-%% PSD - TALIA
-
-%% high-pass - AVINOAM
-
-%% low-pass - AVINOAM
 
 %% LaPlacian - YARDEN
+fileFolder = 'C:\Users\Yarden\Google Drive\University\ELSC\Year 2\BCI\recordings\2_20211107'; %change for each subject
 
-%% clean data vs raw -YARDEN
+% import data_eeg
+struct_data=load(strcat(fileFolder,'\cleaned_sub.mat'));
+data_eeg = cell2mat(struct2cell(struct_data));
+%probelm with importing channels' labels, so manually
+% maybe problem in channel 1 (and no channel 4 for sure)
+% so no c3 at the moment
+c4_num=2;
+four_close_c4=[5 7 9 11];
+% spatial laplacian- subtracting from channel c4 the mean of the
+% closest channels
+c4=data_eeg(c4_num,:);
+lap_c4=c4 - mean(data_eeg(four_close_c4,:));
+plot(0:(length(c4)-1),c4);
+hold on;
+plot(0:(length(c4)-1),lap_c4);
+xlabel('time (ms)'); ylabel('mv')
+title('C4 before and after Spatial Laplacian');
+legend('c4', 'c4- after laplacian');
 
-%% advanced- if we have time
