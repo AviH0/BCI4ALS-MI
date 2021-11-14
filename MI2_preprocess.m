@@ -17,7 +17,7 @@ function [] = MI2_preprocess(recordingFolder)
 % so on - but please cite properly if published.
 
 %% Some parameters (this needs to change according to your system):
-addpath 'C:\Recordings'                     % update to your own computer path
+addpath 'C:\Toolboxes\eeglab2021.1'                     % update to your own computer path
 eeglab;                                     % open EEGLAB 
 highLim = 40;                               % filter data under 40 Hz
 lowLim = 0.5;                               % filter data above 0.5 Hz

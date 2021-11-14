@@ -11,17 +11,16 @@ addpath(genpath('C:\GitHub\BCI4ALS-MI'))
 %MI1_offline_training();
 
 %% define subject folder
-recordingFolder = 'C:\Recordings\2_20211107'; %change for each subject
+recordingFolder = 'C:\Recordings\1_20211104'; %change for each subject
 
 %% read file
 
 recordingFile = strcat(recordingFolder,'\EEG.XDF');
-%EEG = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
-data = load(strcat(recordingFolder, "\cleaned_sub.mat"));
+EEG = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
 %%%%
 
 
 %% plot raw data x voltage
-eegplot(data.EEG_data)
+eegplot(EEG.data)
 %% PSD
-pop_spectopo(EEG)
+eegplo
