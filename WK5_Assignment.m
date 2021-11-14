@@ -1,11 +1,9 @@
 % Week 5 Assignment
 
 %% Add file paths
-userName = 'Yarden'; % change to your username
 
-addpath(genpath('C:\Users\userName\Documents\MATLAB\liblsl-Matlab'))
 addpath(genpath('C:\Toolboxes'))
-addpath(genpath('C:\Users\userName\Documents\MATLAB\BCI4ALS-MI'))
+addpath(genpath('C:\GitHub\BCI4ALS-MI'))
 
 %% Collect data
 lib = lsl_loadlib(); version = lsl_library_version(lib);
