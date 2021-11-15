@@ -1,4 +1,4 @@
-function [] = MI2_preprocess(recordingFolder)
+function [EEG_data] = MI2_preprocess(recordingFolder)
 %% Offline Preprocessing
 % Assumes recorded using Lab Recorder.
 % Make sure you have EEGLAB installed with ERPLAB & loadXDF plugins.
