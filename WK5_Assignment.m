@@ -15,11 +15,12 @@ addpath(genpath('C:\Recordings'))
 %% Define subject ID
 subjectID = "1_20211104"; % as entered at time of recording
 
+
 %% read data, output raw and preprocessed files
 [EEG, clean_data] = open_and_preprocess(subjectID);
 
 %% plot raw data x voltage
-eegplot(EEG.data)   
+% eegplot(EEG.data, 'srate', EEG.srate, 'eloc_file', strcat(recordingFolder, '\EEG_chans.mat'))   
 %% PSD
 pop_spectopo(EEG)
 
