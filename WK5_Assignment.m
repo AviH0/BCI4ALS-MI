@@ -40,15 +40,16 @@ lap_c4 = c4 - mean(clean_data_mat(four_close_c4,:));
 num_samples = length(c4); % number of samples
 srate = EEG.srate; % sampling rate
 total_ms = num_samples / srate * 1000;
+timeVec = 0:8:total_ms-1;
 
 % plot laPlacian before and after
-plot(0:(length(c4)-1),c4, 'LineWidth', 2);
+plot(timeVec,c4, 'LineWidth', 2);
 hold on;
-plot(0:(length(c4)-1),lap_c4,'LineWidth', 2);
-xlabel('Samples'); ylabel('Amplitude (mV)')
+plot(timeVec,lap_c4,'LineWidth', 2);
+xlabel('Time (ms)'); ylabel('Amplitude (mV)')
 title('C4 before and after Spatial Laplacian');
 legend('c4', 'c4 - after laplacian');
-xlim([0, 1000]);
+xlim([0, 1500]);
 
 %% plot cleaned and uncleaned data
 
