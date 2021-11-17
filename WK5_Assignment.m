@@ -7,7 +7,6 @@ addpath(genpath('C:\GitHub\BCI4ALS-MI'))
 addpath(genpath('C:\Toolboxes\liblsl-Matlab'))
 addpath(genpath('C:\Recordings'))
 
-
 %% Collect data
 %lib = lsl_loadlib(); version = lsl_library_version(lib);
 %eeglab
