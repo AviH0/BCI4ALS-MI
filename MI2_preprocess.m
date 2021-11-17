@@ -1,4 +1,4 @@
-function [EEG_data] = MI2_preprocess(recordingFolder)
+function [EEG] = MI2_preprocess(recordingFolder)
 %% Offline Preprocessing
 % Assumes recorded using Lab Recorder.
 % Make sure you have EEGLAB installed with ERPLAB & loadXDF plugins.
@@ -66,5 +66,5 @@ EEG_event = EEG.event;          % Saved markers for sorting the data
 save(strcat(recordingFolder,'\','cleaned_sub.mat'),'EEG_data');
 save(strcat(recordingFolder,'\','EEG_events.mat'),'EEG_event');
 save(strcat(recordingFolder,'\','EEG_chans.mat'),'EEG_chans');
-                
+
 end

@@ -15,17 +15,16 @@ addpath(genpath('C:\Recordings'))
 %% Define subject ID
 subjectID = "1_20211104"; % as entered at time of recording
 
-
 %% read data, output raw and preprocessed files
-[EEG, clean_data] = open_and_preprocess(subjectID);
+[EEG_raw, EEG_clean] = open_and_preprocess(subjectID);
 
 %% plot raw data x voltage
 % eegplot(EEG.data, 'srate', EEG.srate, 'eloc_file', strcat(recordingFolder, '\EEG_chans.mat'))   
 %% PSD
-pop_spectopo(EEG)
+pop_spectopo(EEG_raw)
 
 %% LaPlacian on clean data file
-clean_data_mat = cell2mat(struct2cell(clean_data));
+clean_data_mat = EEG_clean.data;
 % probelm with importing channel labels; import manually
 % maybe problem in channel 1 (and no channel 4 for sure)
 % so no c3 at the moment
@@ -39,7 +38,7 @@ lap_c4 = c4 - mean(clean_data_mat(four_close_c4,:));
 
 % convert sampling to time
 num_samples = length(c4); % number of samples
-srate = EEG.srate; % sampling rate
+srate = EEG_clean.srate; % sampling rate
 total_ms = num_samples / srate * 1000;
 timeVec = 0:8:total_ms-1;
 
@@ -55,12 +54,12 @@ xlim([0, 1500]);
 %% plot cleaned and uncleaned data
 
 % plot raw data
-eegplot(EEG.data)
-pop_spectopo(EEG)
+eegplot(EEG_raw.data)
+pop_spectopo(EEG_raw)
 
 % plot cleaned data
-eegplot(clean_data.data)
-pop_spectopo(clean_data)
+eegplot(EEG_clean.data)
+pop_spectopo(EEG_clean)
 
 
 

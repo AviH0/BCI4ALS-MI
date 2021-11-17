@@ -1,4 +1,4 @@
-function [EEG, clean_data] = open_and_preprocess(subjectNumber)
+function [EEG_raw, clean_data] = open_and_preprocess(subjectNumber)
 
 % THIS FUNCTION READS RAW SUBJECT DATA, CHECKS IF THERE IS A CLEAN FILE AND
 % RUNS THE MI2 FUNCTION IG THE CLEAN FILE DOES NOT EXIST
@@ -19,18 +19,20 @@ end
 recordingFolder = strcat(mainFolder,subjectNumber); % subject's recording folder
 recordingFile = strcat(mainFolder,subjectNumber,'\EEG.XDF'); %raw subject data
 % read raw XDF file from folder
-EEG = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
+EEG_raw = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
 
 fullCleanFile = strcat(mainFolder,subjectNumber, "\cleaned_sub.mat");
 
 % check if a cleaned file already exists. If not, run MI2 to preprocess
-if exist(fullCleanFile, 'file') == 2
-     % File exists. Load it.
-     clean_data = load(strcat(recordingFolder, "\cleaned_sub.mat"));
-else
-     % File does not exist. Run MI2.
-     clean_data = MI2_preprocess(recordingFolder);
-end
+clean_data = MI2_preprocess(recordingFolder);
+
+% if exist(fullCleanFile, 'file') == 2
+%      % File exists. Load it.
+%      clean_data = load(strcat(recordingFolder, "\cleaned_sub.mat"));
+% else
+%      % File does not exist. Run MI2.
+%      clean_data = MI2_preprocess(recordingFolder);
+% end
 
 
 end
