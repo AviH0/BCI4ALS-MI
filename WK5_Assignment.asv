@@ -2,36 +2,21 @@
 
 %% Add file paths
 
-%addpath(genpath('C:\Toolboxes'))
+addpath(genpath('C:\Toolboxes'))
 addpath(genpath('C:\GitHub\BCI4ALS-MI'))
 addpath(genpath('C:\Toolboxes\liblsl-Matlab'))
 addpath(genpath('C:\Recordings'))
-
 
 %% Collect data
 %lib = lsl_loadlib(); version = lsl_library_version(lib);
 %eeglab
 %MI1_offline_training();
 
-%% define subject folder
-recordingFolder = 'C:\Recordings\1_20211104'; %change for each subject
-
-%% read file
-
-recordingFile = strcat(recordingFolder,'\EEG.XDF');
-EEG = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
-
-% check if a cleaned file already exists. If not, run MI2 to preprocess
-if exist(recordingFile, 'file') == 2
-     % File exists. Load it.
-     clean_data = load(strcat(recordingFolder, "\cleaned_sub.mat"));
-else
-     % File does not exist. Run MI2.
-     clean_data = MI2_preprocess(recordingFolder);
-end
+%% Define subject name
+subjectName = "1_20211104"; %c
 
 %% plot raw data x voltage
-eegplot(data.EEG_data)
+eegplot(EEG.data)   
 %% PSD
 pop_spectopo(EEG)
 
@@ -61,4 +46,16 @@ xlabel('Samples'); ylabel('Amplitude (mV)')
 title('C4 before and after Spatial Laplacian');
 legend('c4', 'c4 - after laplacian');
 xlim([0, 1000]);
+
+%% plot cleaned and uncleaned data
+
+% plot raw data
+eegplot(EEG.data)
+pop_spectopo(EEG)
+
+% plot cleaned data
+eegplot(clean_data.data)
+pop_spectopo(clean_data)
+
+
 
