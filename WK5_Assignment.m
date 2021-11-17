@@ -20,8 +20,10 @@ recordingFolder = 'C:\Recordings\1_20211104'; %change for each subject
 recordingFile = strcat(recordingFolder,'\EEG.XDF');
 EEG = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
 
+fullCleanFile = strcat(recordingFolder, "\cleaned_sub.mat");
+
 % check if a cleaned file already exists. If not, run MI2 to preprocess
-if exist(recordingFile, 'file') == 2
+if exist(fullCleanFile, 'file') == 2
      % File exists. Load it.
      clean_data = load(strcat(recordingFolder, "\cleaned_sub.mat"));
 else
