@@ -12,27 +12,12 @@ addpath(genpath('C:\Recordings'))
 %eeglab
 %MI1_offline_training();
 
-%% define subject folder
-recordingFolder = 'C:\Recordings\1_20211104'; %change for each subject
+%% Define subject ID
+subjectID = "1_20211104"; % as entered at time of recording
 
-%% read file
 
-recordingFile = strcat(recordingFolder,'\EEG.XDF');
-
-EEG = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
-EEG_chans = load(strcat(recordingFolder, "\EEG_chans.mat"));
-for i = 1: length(EEG_chans.EEG_chans)
-    EEG.chanlocs(i).label = EEG_chans.EEG_chans(i);
-end
-
-% check if a cleaned file already exists. If not, run MI2 to preprocess
-if exist(recordingFile, 'file') == 2
-     % File exists. Load it.
-     clean_data = load(strcat(recordingFolder, "\cleaned_sub.mat"));
-else
-     % File does not exist. Run MI2.
-     clean_data = MI2_preprocess(recordingFolder);
-end
+%% read data, output raw and preprocessed files
+[EEG, clean_data] = open_and_preprocess(subjectID);
 
 %% plot raw data x voltage
 % eegplot(EEG.data, 'srate', EEG.srate, 'eloc_file', strcat(recordingFolder, '\EEG_chans.mat'))   
@@ -69,11 +54,11 @@ xlim([0, 1000]);
 %% plot cleaned and uncleaned data
 
 % plot raw data
-eegplot(data.EEG_data)
+eegplot(EEG.data)
 pop_spectopo(EEG)
 
 % plot cleaned data
-eegplot(data.clean_data)
+eegplot(clean_data.data)
 pop_spectopo(clean_data)
 
 
