@@ -18,7 +18,12 @@ recordingFolder = 'C:\Recordings\1_20211104'; %change for each subject
 %% read file
 
 recordingFile = strcat(recordingFolder,'\EEG.XDF');
+
 EEG = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
+EEG_chans = load(strcat(recordingFolder, "\EEG_chans.mat"));
+for i = 1: length(EEG_chans.EEG_chans)
+    EEG.chanlocs(i).label = EEG_chans.EEG_chans(i);
+end
 
 % check if a cleaned file already exists. If not, run MI2 to preprocess
 if exist(recordingFile, 'file') == 2
@@ -30,7 +35,7 @@ else
 end
 
 %% plot raw data x voltage
-eegplot(EEG.data)   
+% eegplot(EEG.data, 'srate', EEG.srate, 'eloc_file', strcat(recordingFolder, '\EEG_chans.mat'))   
 %% PSD
 pop_spectopo(EEG)
 
