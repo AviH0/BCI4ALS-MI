@@ -14,11 +14,11 @@ subjectID = "SubTS2021-11-14"; % as entered at time of recording
 [EEG_raw, EEG_clean] = open_and_preprocess(subjectID);
 
 %% 2
-recording_folder=strcat("C:\Recordings\",subjectID,'\');
+recording_folder = strcat("C:/Recordings/",subjectID);
 cleanFile = '/cleaned_sub.mat';
 MI3_segmentation(recording_folder, cleanFile);
 % a
-MI4_featureExtraction(recording_folder, cleanFile)
+MI4_featureExtraction(recording_folder)
 
 %% b
 load('EEG_chans.mat');
@@ -31,4 +31,4 @@ save(fullfile(recording_folder, 'cleaned_sub_lap.mat'), 'EEG_data', '-mat');
 cleanFile = '/cleaned_sub_lap.mat';
 
 MI3_segmentation(recording_folder, cleanFile)
-MI4_featureExtraction(recording_folder, cleanFile)
+MI4_featureExtraction(recording_folder)
