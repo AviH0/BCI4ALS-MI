@@ -13,8 +13,8 @@ function [] = MI4_featureExtraction(recordingFolder)
 % so on - but please cite properly if published.
 
 %% Load previous variables:
-load(strcat(recordingFolder,'EEG_chans.mat'));                  % load the openBCI channel location
-load(strcat(recordingFolder,'MIData.mat'));                     % load the EEG data
+load(strcat(recordingFolder,'/EEG_chans.mat'));                  % load the openBCI channel location
+load(strcat(recordingFolder,'/MIData.mat'));                     % load the EEG data
 targetLabels = cell2mat(struct2cell(load(strcat(recordingFolder,'/trainingVec'))));
 
 Features2Select = 10;                                           % number of featuers for feature selection
@@ -137,11 +137,11 @@ bands{4} = [17.5,20.5];
 bands{5} = [12.5,30];
     
 % times of frequency band features
-times{1} = (1*Fs : 3*Fs);
-times{2} = (3*Fs : 4.5*Fs);
-times{3} = (4.25*Fs : size(MIData,3));
-times{4} = (2*Fs : 2.75*Fs);
-times{5} = (2.5*Fs : 4*Fs);
+times{1} = (floor(1*Fs) : floor(3*Fs));
+times{2} = (floor(3*Fs) : floor(4.5*Fs));
+times{3} = (floor(4.25*Fs) : floor(size(MIData,3)));
+times{4} = (floor(2*Fs) : floor(2.75*Fs));
+times{5} = (floor(2.5*Fs) : floor(4*Fs));
 
 numSpectralFeatures = length(bands);                        % how many features exist overall 
 
