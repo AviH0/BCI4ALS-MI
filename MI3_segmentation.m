@@ -1,4 +1,4 @@
-function MI3_segmentation(recordingFolder)
+function MI3_segmentation(recordingFolder, cleanFile)
 %% Segment data using markers
 % This function segments the continuous data into trials or epochs in a matrix ready for classifier training.
 
@@ -11,7 +11,7 @@ function MI3_segmentation(recordingFolder)
 %% Parameters and previous variables:
 Fs = 125;               % openBCI sample rate
 trialLength = 5;        % needs to be equal to offline trainig parameters
-load(strcat(recordingFolder,'/cleaned_sub.mat'));               % load the filtered EEG data in .mat format
+load(strcat(recordingFolder,cleanFile));                        % load the filtered EEG data in .mat format
 load(strcat(recordingFolder,'/trainingVec.mat'));               % load the training vector (which target at which trial)
 load(strcat(recordingFolder,'/EEG_chans.mat'));                 % load the EEG channel locations
 numChans = length(EEG_chans);                                   % how many chans do we have?
