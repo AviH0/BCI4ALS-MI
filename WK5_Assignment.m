@@ -13,7 +13,7 @@ addpath(genpath('C:\Recordings'))
 %MI1_offline_training();
 
 %% Define subject ID
-subjectID = "1_20211104"; % as entered at time of recording
+subjectID = "SubTS2021-11-14"; % as entered at time of recording
 
 %% read data, output raw and preprocessed files
 [EEG_raw, EEG_clean] = open_and_preprocess(subjectID);
