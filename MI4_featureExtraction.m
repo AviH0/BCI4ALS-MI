@@ -159,7 +159,7 @@ for trial = 1:trials                                % run over all the trials
     
     for channel = 1:numChans                        % run over all the electrodes (channels)
         n = 1;                                      % start a new feature index
-        for feature = 1:numSpectralFeatures                 % run over all spectral band power features from the section above
+        for feature = 1:numSpectralFeatures         % run over all spectral band power features from the section above
             % Extract features: bandpower +-1 Hz around each target frequency
             MIFeaturesLabel(trial,channel,n) = bandpower(squeeze(MIData(trial,channel,times{feature})),Fs,bands{feature});
             n = n+1;            
@@ -246,9 +246,11 @@ for trial = 1:trials                                % run over all the trials
         % Power bandwidth
         MIFeaturesLabel(trial,channel,n) = powerbw(normlizedMatrix,Fs);
         n = n + 1;
+        
         disp(strcat('Extracted Power bandwidth from electrode:',EEG_chans(channel,:)))
         
     end
+    
 end
 
 % z-score all the features

@@ -10,24 +10,43 @@ function [test_results] = MI5_modelTraining(recordingFolder)
 
 %% Read the features & labels 
 
+testIdx = randperm(length(idleIdx),num4test);                       % picking test index randomly
+testIdx = [idleIdx(testIdx) leftIdx(testIdx) rightIdx(testIdx)];    % taking the test index from each class
+testIdx = sort(testIdx);                                            % sort the trials
+
+% split test data
+FeaturesTest = MIFeatures(testIdx,:,:);     % taking the test trials features from each class
+LabelTest = targetLabels(testIdx);          % taking the test trials labels from each class
+
+% split train data
+FeaturesTrain = MIFeatures;
+FeaturesTrain (testIdx ,:,:) = [];          % delete the test trials from the features matrix, and keep only the train trials
+LabelTrain = targetLabels;
+LabelTrain(testIdx) = [];                   % delete the test trials from the labels matrix, and keep only the train labels
+
+%%
+
 FeaturesTrain = cell2mat(struct2cell(load(strcat(recordingFolder,'\FeaturesTrainSelected.mat'))));   % features for train set
 LabelTrain = cell2mat(struct2cell(load(strcat(recordingFolder,'\LabelTrain'))));                % label vector for train set
 
-validIdx = randperm(length(FeaturesTrain), floor(0.2*length(FeaturesTrain))); % permutes indices of all training features, takes 20% of samples
+validIndices = randperm(length(FeaturesTrain), floor(0.8*length(FeaturesTrain))); % permutes indices of all training features, takes 80% of samples
 
 % divide into training and validation(test) 
-FeaturesValidation = FeaturesTrain(validIdx,:); 
-LabelValidation = LabelTrain(validIdx);
+FeaturesValidation = FeaturesTrain(validIndices:end, :); 
+LabelValidation = LabelTrain(splitIndex + 1:end);
 
-FeaturesTrain(validIdx, :) = [];
-LabelTrain(validIdx) = [];
+FeaturesTrain = FeaturesTrain(1:splitIndex, :);
+LabelTrain = LabelTrain(1:splitIndex);
 
 % label vector
 LabelTest = cell2mat(struct2cell(load(strcat(recordingFolder,'\LabelTest'))));              % label vector for test set
 FeaturesTest = cell2mat(struct2cell(load(strcat(recordingFolder,'\FeaturesTest.mat'))));    % features for test set
 
-%% test data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% Split to train and validation sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% test data
 % testPrediction = classify(FeaturesValidation,FeaturesTrain,LabelTrain,'linear');          % classify the test set using a linear classification object (built-in Matlab functionality)
 W = LDA(FeaturesTrain,LabelTrain);                                                  % train a linear discriminant analysis weight vector (first column is the constants)
 

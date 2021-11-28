@@ -21,10 +21,10 @@ recordingFile = strcat(mainFolder,subjectNumber,'\EEG.XDF'); %raw subject data
 % read raw XDF file from folder
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
 EEG_raw = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
-EEG_raw = pop_chanedit(EEG_raw, 'lookup','C:\\GitHub\\BCI4ALS-MI\\montage_ultracortex.ced','load',{'C:\\Toolboxes\\GitHub\\BCI4ALS-MI\\montage_ultracortex.ced','filetype','autodetect'});
+EEG_raw = pop_chanedit(EEG_raw, 'lookup','C:\Toolboxes\GitHub\BCI4ALS-MI\montage_ultracortex.ced','load',{'C:\Toolboxes\GitHub\BCI4ALS-MI\montage_ultracortex.ced','filetype','autodetect'});
 [ALLEEG EEG_raw] = eeg_store(ALLEEG, EEG_raw, CURRENTSET);
 EEG_raw = eeg_checkset( EEG_raw );
-EEG_raw=pop_chanedit(EEG_raw, 'lookup','C:\\Toolboxes\\eeglab2021.1\\plugins\\dipfit\\standard_BEM\\elec\\standard_1005.elc');
+EEG_raw=pop_chanedit(EEG_raw, 'lookup','C:\Toolboxes\EEGLab\eeglab2021.1\plugins\dipfit\standard_BEM\elec\standard_1005.elc');
 [ALLEEG EEG_raw] = eeg_store(ALLEEG, EEG_raw, CURRENTSET);
 
 fullCleanFile = strcat(mainFolder,subjectNumber, "\cleaned_sub.mat");
