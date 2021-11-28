@@ -10,19 +10,26 @@ function [test_results] = MI5_modelTraining(recordingFolder)
 
 %% Read the features & labels 
 
-FeaturesTrain = cell2mat(struct2cell(load(strcat(recordingFolder,'\FeaturesSelected.mat'))));   % features for train set
+FeaturesTrain = cell2mat(struct2cell(load(strcat(recordingFolder,'\FeaturesTrainSelected.mat'))));   % features for train set
 LabelTrain = cell2mat(struct2cell(load(strcat(recordingFolder,'\LabelTrain'))));                % label vector for train set
 
+validIndices = randperm(length(FeaturesTrain), floor(0.8*length(FeaturesTrain)));
+FeaturesValidation = FeaturesTrain(validIndices:end, :);
+LabelValidation = LabelTrain(splitIndex + 1:end);
+
+FeaturesTrain = FeaturesTrain(1:splitIndex, :);
+LabelTrain = LabelTrain(1:splitIndex);
+
 % label vector
-LabelTest = cell2mat(struct2cell(load(strcat(recordingFolder,'\LabelTest'))));      % label vector for test set
-load(strcat(recordingFolder,'\FeaturesTest.mat'));                                  % features for test set
+LabelTest = cell2mat(struct2cell(load(strcat(recordingFolder,'\LabelTest'))));              % label vector for test set
+FeaturesTest = cell2mat(struct2cell(load(strcat(recordingFolder,'\FeaturesTest.mat'))));    % features for test set
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% Split to train and validation sets %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% test data
-testPrediction = classify(FeaturesTest,FeaturesTrain,LabelTrain,'linear');          % classify the test set using a linear classification object (built-in Matlab functionality)
+% testPrediction = classify(FeaturesValidation,FeaturesTrain,LabelTrain,'linear');          % classify the test set using a linear classification object (built-in Matlab functionality)
 W = LDA(FeaturesTrain,LabelTrain);                                                  % train a linear discriminant analysis weight vector (first column is the constants)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
