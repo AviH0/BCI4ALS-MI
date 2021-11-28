@@ -135,6 +135,8 @@ bands{2} = [8,10.5];
 bands{3} = [10,15.5];
 bands{4} = [17.5,20.5];
 bands{5} = [12.5,30];
+bands{6} = [4 7]; % Group 35 feature 1
+bands{7} = [50 60];
     
 % times of frequency band features
 times{1} = (floor(1*Fs) : floor(3*Fs));
@@ -142,7 +144,8 @@ times{2} = (floor(3*Fs) : floor(4.5*Fs));
 times{3} = (floor(4.25*Fs) : floor(size(MIData,3)));
 times{4} = (floor(2*Fs) : floor(2.75*Fs));
 times{5} = (floor(2.5*Fs) : floor(4*Fs));
-
+times{6} = (floor(2*Fs) : floor(4*Fs));
+times{7} = (floor(0.75*Fs) : floor(2*Fs));
 numSpectralFeatures = length(bands);                        % how many features exist overall 
 
 %% Extract features 
