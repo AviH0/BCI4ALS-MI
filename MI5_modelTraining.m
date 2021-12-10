@@ -1,4 +1,4 @@
-function [test_results] = MI5_modelTraining(recordingFolder)
+function [test_results, fig] = MI5_modelTraining(recordingFolder)
 % MI5_LearnModel_Scaffolding outputs a weight vector for all the features
 % using a simple multi-class linear approach.
 % Add your own classifier (SVM, CSP, DL, CONV, Riemann...), and make sure
@@ -28,12 +28,62 @@ FeaturesTest = cell2mat(struct2cell(load(strcat(recordingFolder,'\FeaturesTest.m
 
 %% test data
 
-% testPrediction = classify(FeaturesValidation,FeaturesTrain,LabelTrain,'linear');          % classify the test set using a linear classification object (built-in Matlab functionality)
+% DAclass = classify(FeaturesValidation,FeaturesTrain,LabelTrain);                    % classify the test set using a linear classification object (built-in Matlab functionality)
+
 W = LDA(FeaturesTrain,LabelTrain);                                                  % train a linear discriminant analysis weight vector (first column is the constants)
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%% Add your own classifier %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% train using SVM - Linear kernel
+t = templateSVM('KernelFunction','linear');
+Mdl = fitcecoc(FeaturesTrain,LabelTrain,'Learners',t);
+isLoss = loss(Mdl,FeaturesTest,LabelTest);
+
+% predict based on the SVM model
+[labelSVM,scoreSVM] = predict(Mdl,FeaturesTest);
+percentAccSVM_l = mean(labelSVM == LabelTest')*100;
+
+% train using SVM - Gaussian kernel
+t_g = templateSVM('KernelFunction','gaussian');
+Mdl_g = fitcecoc(FeaturesTrain,LabelTrain,'Learners',t_g);
+isLoss_g = loss(Mdl_g,FeaturesTest,LabelTest);
+
+% predict based on the SVM model
+[labelSVM_g,scoreSVM_g] = predict(Mdl_g,FeaturesTest);
+percentAccSVM_g = mean(labelSVM_g == LabelTest')*100;
+
+% train using SVM - RBF kernel
+t_r = templateSVM('KernelFunction','RBF');
+Mdl_r = fitcecoc(FeaturesTrain,LabelTrain,'Learners',t_r);
+isLoss_r = loss(Mdl_g,FeaturesTest,LabelTest);
+
+% predict based on the SVM model
+[labelSVM_r,scoreSVM_r] = predict(Mdl_r,FeaturesTest);
+percentAccSVM_r = mean(labelSVM_r == LabelTest')*100;
+
+% train using SVM - RBF kernel
+t_q = templateSVM('KernelFunction','RBF');
+Mdl_q = fitcecoc(FeaturesTrain,LabelTrain,'Learners',t_q);
+isLoss_q = loss(Mdl_q,FeaturesTest,LabelTest);
+
+% predict based on the SVM model
+[labelSVM_q,scoreSVM_q] = predict(Mdl_q,FeaturesTest);
+percentAccSVM_q = mean(labelSVM_q == LabelTest')*100;
+
+accVec = [percentAccSVM, percentAccSVM_g, percentAccSVM_r, percentAccSVM_q];
+
+fig = figure();
+scatter(1:length(accVec),accVec, 'filled')
+hold on;
+x = [1:4];
+y = [33,33,33,33];
+plot(x,y,'LineWidth',1.5)
+names = {'linear';'gaussian';'RBF';'quadratic'};
+set(gca,'xtick',[1:4],'xticklabel',names)
+ylim([0,100])
+title ('SVM prediction accuracy with different kernel types')
+xlabel('kernel type')
+ylabel('acurracy (%)')
+legend('SVM accuracy', 'chance level')
+
 
 %% Test data
 % test prediction from linear classifier
