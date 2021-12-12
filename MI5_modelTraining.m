@@ -38,31 +38,26 @@ W = LDA(FeaturesTrain,LabelTrain);                                              
 t = templateSVM('KernelFunction','linear');
 Mdl = fitcecoc(FeaturesTrain,LabelTrain,'Learners',t);
 isLoss = loss(Mdl,FeaturesTest,LabelTest);
+CVMdl = crossval(Mdl);
+genError = kfoldLoss(CVMdl);
 
 % predict based on the SVM model
 [labelSVM,scoreSVM] = predict(Mdl,FeaturesTest);
 percentAccSVM_l = mean(labelSVM == LabelTest')*100;
 
-% train using SVM - Gaussian kernel
-t_g = templateSVM('KernelFunction','gaussian');
-Mdl_g = fitcecoc(FeaturesTrain,LabelTrain,'Learners',t_g);
-isLoss_g = loss(Mdl_g,FeaturesTest,LabelTest);
-
-% predict based on the SVM model
-[labelSVM_g,scoreSVM_g] = predict(Mdl_g,FeaturesTest);
-percentAccSVM_g = mean(labelSVM_g == LabelTest')*100;
-
 % train using SVM - RBF kernel
-t_r = templateSVM('KernelFunction','RBF');
+t_r = templateSVM('KernelFunction','rbf');
 Mdl_r = fitcecoc(FeaturesTrain,LabelTrain,'Learners',t_r);
 isLoss_r = loss(Mdl_g,FeaturesTest,LabelTest);
+CVMdl_r = crossval(Mdl_r);
+genError_r = kfoldLoss(CVMdl_r);
 
 % predict based on the SVM model
 [labelSVM_r,scoreSVM_r] = predict(Mdl_r,FeaturesTest);
 percentAccSVM_r = mean(labelSVM_r == LabelTest')*100;
 
 % train using SVM - RBF kernel
-t_q = templateSVM('KernelFunction','RBF');
+t_q = templateSVM('KernelFunction','polynomial', 'PolynomialOrder',2);
 Mdl_q = fitcecoc(FeaturesTrain,LabelTrain,'Learners',t_q);
 isLoss_q = loss(Mdl_q,FeaturesTest,LabelTest);
 
@@ -70,16 +65,16 @@ isLoss_q = loss(Mdl_q,FeaturesTest,LabelTest);
 [labelSVM_q,scoreSVM_q] = predict(Mdl_q,FeaturesTest);
 percentAccSVM_q = mean(labelSVM_q == LabelTest')*100;
 
-accVec = [percentAccSVM_l, percentAccSVM_g, percentAccSVM_r, percentAccSVM_q];
+accVec = [percentAccSVM_l, percentAccSVM_r, percentAccSVM_q]
 
 fig = figure();
 scatter(1:length(accVec),accVec, 'filled')
 hold on;
-x = [1:4];
-y = [33,33,33,33];
+x = [1:3];
+y = [33,33,33];
 plot(x,y,'LineWidth',1.5)
-names = {'linear';'gaussian';'RBF';'quadratic'};
-set(gca,'xtick',[1:4],'xticklabel',names)
+names = {'linear';'RBF';'poly'};
+set(gca,'xtick',[1:3],'xticklabel',names)
 ylim([0,100])
 title ('SVM prediction accuracy with different kernel types')
 xlabel('kernel type')
