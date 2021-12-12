@@ -8,7 +8,7 @@ addpath(genpath('C:\Toolboxes\liblsl-Matlab'))
 addpath(genpath('C:\Recordings'))
 
 %% Define subject ID
-subjectID = "SubTS2021-11-14"; % as entered at time of recording
+subjectID = "Sub2_20211107"; % as entered at time of recording
 
 %% read data, output raw and preprocessed files
 [EEG_raw, EEG_clean] = open_and_preprocess(subjectID);
