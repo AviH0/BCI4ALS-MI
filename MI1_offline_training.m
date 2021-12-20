@@ -23,15 +23,15 @@ recordingFolder = strcat(rootFolder,'\Sub',subID,'\');
 mkdir(recordingFolder);
 
 % Define times
-InitWait = 5;                           % before trials prep time
-trialLength = 5;                        % each trial length in seconds 
+InitWait = 2;                           % before trials prep time
+trialLength = 3;                        % each trial length in seconds 
 cueLength = 1;                          % time for each cue
 readyLength = 1;                        % time "ready" on screen
 nextLength = 1;                         % time "next" on screen
 
 % Define length and classes
-numTrials = 10;                         % set number of training trials per class (the more classes, the more trials per class)
-numClasses = 3;                         % set number of possible classes
+numTrials = 50;                         % set number of training trials per class (the more classes, the more trials per class)
+numClasses = 2;                         % set number of possible classes
 
 % Set markers / triggers names
 startRecordings = 000;          
@@ -75,9 +75,9 @@ hAx.YLim = [0, 1];
 hold on
 
 %% Prepare Visual Cues - read the right/left/idle images
-trainingImage{1} = imread('square.jpeg','jpeg');
+trainingImage{1} = imread('arrow_right.jpeg','jpeg');
 trainingImage{2} = imread('arrow_left.jpeg','jpeg');
-trainingImage{3} = imread('arrow_right.jpeg','jpeg');
+trainingImage{3} = imread('square.jpeg','jpeg');
     
 %% Prepare Training Vector
 trainingVec = prepareTraining(numTrials,numClasses);    % vector with the conditions for each trial

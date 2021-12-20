@@ -16,9 +16,9 @@ function [] = MI4_featureExtraction(recordingFolder)
 load(strcat(recordingFolder,'/EEG_chans.mat'));                  % load the openBCI channel location
 load(strcat(recordingFolder,'/MIData.mat'));                     % load the EEG data
 targetLabels = cell2mat(struct2cell(load(strcat(recordingFolder,'/trainingVec'))));
-
+MIData = MIData(:,1:13,:);
 Features2Select = 10;                                           % number of featuers for feature selection
-num4test = 5;                                                   % define how many test trials after feature extraction
+num4test = 15;                                                   % define how many test trials after feature extraction
 numClasses = length(unique(targetLabels));                      % set number of possible targets (classes)
 Fs = 125;                                                       % openBCI Cyton+Daisy by Bluetooth sample rate
 trials = size(MIData,1);                                        % get number of trials from main data variable
@@ -66,7 +66,7 @@ for chan = 1:numChans
     end
 end
 % manually plot (surf) mean spectrogram for channels C4 + C3:
-mySpectrogram(t,spectFreq,totalSpect,numClasses,vizChans,EEG_chans)
+% mySpectrogram(t,spectFreq,totalSpect,numClasses,vizChans,EEG_chans)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% Add your own data visualization here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -140,11 +140,11 @@ bands{7} = [50 60];
     
 % times of frequency band features
 times{1} = (floor(1*Fs) : floor(3*Fs));
-times{2} = (floor(3*Fs) : floor(4.5*Fs));
-times{3} = (floor(4.25*Fs) : floor(size(MIData,3)));
+times{2} = (floor(0.1*Fs) : floor(2*Fs));
+times{3} = (floor(2.25*Fs) : floor(size(MIData,3)));
 times{4} = (floor(2*Fs) : floor(2.75*Fs));
-times{5} = (floor(2.5*Fs) : floor(4*Fs));
-times{6} = (floor(2*Fs) : floor(4*Fs));
+times{5} = (floor(2.5*Fs) : floor(3*Fs));
+times{6} = (floor(2*Fs) : floor(3*Fs));
 times{7} = (floor(0.75*Fs) : floor(2*Fs));
 numSpectralFeatures = length(bands);                        % how many features exist overall 
 
@@ -262,8 +262,10 @@ MIFeatures = [CSPFeatures MIFeatures];              % add the CSP features to th
 AllDataInFeatures = MIFeatures;
 save(strcat(recordingFolder,'/AllDataInFeatures.mat'),'AllDataInFeatures');
 
-testIdx = randperm(length(idleIdx),num4test);                       % picking test index randomly
-testIdx = [idleIdx(testIdx) leftIdx(testIdx) rightIdx(testIdx)];    % taking the test index from each class
+% testIdx = randperm(length(idleIdx),num4test);                       % picking test index randomly
+% testIdx = [idleIdx(testIdx) leftIdx(testIdx) rightIdx(testIdx)];    % taking the test index from each class
+testIdx = randperm(length(leftIdx),num4test);                       % picking test index randomly
+testIdx = [leftIdx(testIdx) rightIdx(testIdx)];    % taking the test index from each class
 testIdx = sort(testIdx);                                            % sort the trials
 
 % split test data

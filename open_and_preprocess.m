@@ -16,8 +16,8 @@ else
     
 end
 
-recordingFolder = strcat(mainFolder,subjectNumber); % subject's recording folder
-recordingFile = strcat(mainFolder,subjectNumber,'\EEG.XDF'); %raw subject data
+recordingFolder = strcat(mainFolder,'Sub',subjectNumber); % subject's recording folder
+recordingFile = strcat(mainFolder,'Sub',subjectNumber,'\EEG.XDF'); %raw subject data
 % read raw XDF file from folder
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
 EEG_raw = pop_loadxdf(recordingFile, 'streamtype', 'EEG', 'exclude_markerstreams', {});
