@@ -18,7 +18,7 @@ addpath(genpath('C:\Toolboxes\liblsl-Matlab'))
 addpath(genpath('C:\Recordings'))
 
 clc; clear; close all;
-
+%check
 %% Run stimulation and record EEG data
 [recordingFolder, subID] = MI1_offline_training();
 disp('Finished stimulation and EEG recording. Stop the LabRecorder and press any key to continue...');
