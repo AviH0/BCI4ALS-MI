@@ -13,7 +13,7 @@
 %% Add file paths
 
 addpath(genpath('C:\Toolboxes'))
-addpath(genpath('C:\GitHub\BCI4ALS-MI'))
+addpath(genpath('C:\Toolboxes\GitHub\BCI4ALS-MI'))
 addpath(genpath('C:\Toolboxes\liblsl-Matlab'))
 addpath(genpath('C:\Recordings'))
 
