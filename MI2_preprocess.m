@@ -59,6 +59,22 @@ EEG = eeg_checkset( EEG );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% (5) Add advanced artifact removal functions %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+c4_num = 2; % channel number
+four_close_c4 = [5 7 9 11]; % four electrodes closest to electrode C4
+% spatial laplacian- subtracting from channel c4 the mean of the
+% closest channels
+c4 = EEG.data(c4_num,:); % data from electrode C4 only
+lap_c4 = c4 - mean(EEG.data(four_close_c4,:));
+
+c3_num = 1; % channel number
+four_close_c3 = [4 6 8 10]; % four electrodes closest to electrode C4
+% spatial laplacian- subtracting from channel c4 the mean of the
+% closest channels
+c3 = EEG.data(c3_num,:); % data from electrode C4 only
+lap_c3 = c3 - mean(EEG.data(four_close_c3,:));
+
+EEG.data(c3_num,:) = lap_c3;
+EEG.data(c4_num,:) = lap_c4;
 
 % Save the data into .mat variables on the computer
 EEG_data = EEG.data;            % Pre-processed EEG data
