@@ -48,7 +48,7 @@ percentAccSVM_l = mean(labelSVM == LabelTest')*100;
 % train using SVM - RBF kernel
 t_r = templateSVM('KernelFunction','rbf');
 Mdl_r = fitcecoc(FeaturesTrain,LabelTrain,'Learners',t_r);
-isLoss_r = loss(Mdl_g,FeaturesTest,LabelTest);
+isLoss_r = loss(Mdl_r,FeaturesTest,LabelTest);
 CVMdl_r = crossval(Mdl_r);
 genError_r = kfoldLoss(CVMdl_r);
 
@@ -71,7 +71,7 @@ fig = figure();
 scatter(1:length(accVec),accVec, 'filled')
 hold on;
 x = [1:3];
-y = [33,33,33];
+y = [50,50,50]; %if three classes- 33 33 33
 plot(x,y,'LineWidth',1.5)
 names = {'linear';'RBF';'poly'};
 set(gca,'xtick',[1:3],'xticklabel',names)
@@ -84,7 +84,7 @@ legend('SVM accuracy', 'chance level')
 
 %% Test data
 % test prediction from linear classifier
-test_results = (testPrediction'-LabelTest);                                         % prediction - true labels = accuracy
+test_results = (labelSVM'-LabelTest);                                         % prediction - true labels = accuracy
 test_results = (sum(test_results == 0)/length(LabelTest))*100;
 disp(['test accuracy - ' num2str(test_results) '%'])
 

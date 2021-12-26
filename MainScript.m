@@ -13,7 +13,7 @@
 %% Add file paths
 
 addpath(genpath('C:\Toolboxes'))
-addpath(genpath('C:\GitHub\BCI4ALS-MI'))
+addpath(genpath('C:\Toolboxes\GitHub\BCI4ALS-MI'))
 addpath(genpath('C:\Toolboxes\liblsl-Matlab'))
 addpath(genpath('C:\Recordings'))
 
@@ -26,10 +26,12 @@ pause;
 
 %% Run pre-processing pipeline on recorded data
 % MI2_preprocess(recordingFolder);
+%subID='AH2021-12-19';
 [EEG_raw, EEG_clean] = open_and_preprocess(subID);
 disp('Finished pre-processing pipeline. Press any key to continue...');
 pause;
 %% Segment data by trials
+%recordingFolder='C:\recordings\SubAH2021-12-19';
 MI3_segmentation(recordingFolder, '/cleaned_sub.mat');
 disp('Finished segmenting the data.Press any key to continue...');
 pause;
