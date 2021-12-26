@@ -30,7 +30,7 @@ readyLength = 1;                        % time "ready" on screen
 nextLength = 1;                         % time "next" on screen
 
 % Define length and classes
-numTrials = 70;                         % set number of training trials per class (the more classes, the more trials per class)
+numTrials = 90;                         % set number of training trials per class (the more classes, the more trials per class)
 numClasses = 2;                         % set number of possible classes
 
 % Set markers / triggers names
