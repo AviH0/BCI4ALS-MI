@@ -20,18 +20,18 @@ addpath(genpath('C:\Recordings'))
 clc; clear; close all;
 
 %% Run stimulation and record EEG data
-[recordingFolder, subID] = MI1_offline_training();
+[recordingFolder, subID, times] = MI1_offline_training();
 disp('Finished stimulation and EEG recording. Stop the LabRecorder and press any key to continue...');
 pause;
 
 %% Run pre-processing pipeline on recorded data
 % MI2_preprocess(recordingFolder);
-%subID='YW2021-12-26';
+%subID='AH2021-12-26';
 [EEG_raw, EEG_clean] = open_and_preprocess(subID);
 disp('Finished pre-processing pipeline. Press any key to continue...');
 pause;
 %% Segment data by trials
-%recordingFolder='C:\recordings\SubAH2021-12-26';
+%recordingFolder='C:\recordings\SubAH2021-12-19';
 MI3_segmentation(recordingFolder, '/cleaned_sub.mat');
 disp('Finished segmenting the data.Press any key to continue...');
 pause;
@@ -42,5 +42,5 @@ disp('Finished extracting features and labels. Press any key to continue...');
 pause;
 
 %% Train a model using features and labels
-testresult = MI5_modelTraining(recordingFolder);
+accMat = MI5_modelTraining(recordingFolder);
 disp('Finished training the model. The offline process is done!');
