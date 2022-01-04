@@ -1,4 +1,4 @@
-function [recordingFolder,subID] = MI1_offline_training()
+function [recordingFolder,subID,Times] = MI1_offline_training()
 %% MOTOR IMAGERY Training Scaffolding 
 % This code creates a training paradigm with (#) classes on screen for
 % (#) numTrials. Before each trial, one of the targets is cued (and remains
@@ -11,6 +11,7 @@ function [recordingFolder,subID] = MI1_offline_training()
 
 %% Make sure you have Lab Streaming Layer installed.
 % Set parameters (these will need to change according to your system):
+tStart=tic;
 addpath('C:\Toolboxes\labstreaminglayer-master\LSL\liblsl-Matlab');     % lab streaming layer library
 addpath('C:\Toolboxes\labstreaminglayer-master\LSL\liblsl-Matlab\bin'); % lab streaming layer bin
 
@@ -91,6 +92,7 @@ text(0.5,0.5 ,...                               % important for people to prepar
     'HorizontalAlignment', 'Center', 'Color', 'white', 'FontSize', 40);
 pause(InitWait)
 cla
+T = zeros(1,totalTrials*2+1);
 for trial = 1:totalTrials
     outletStream.push_sample(startTrial);       % trial trigger & counter
     currentClass = trainingVec(trial);          % What class is it?
@@ -112,9 +114,11 @@ for trial = 1:totalTrials
     % Show image of the corresponding label of the trial
     image(flip(trainingImage{currentClass}, 1), 'XData', [0.25, 0.75],...
         'YData', [0.25, 0.75 * ...
-        size(trainingImage{currentClass},1)./ size(trainingImage{currentClass},2)])    
+        size(trainingImage{currentClass},1)./ size(trainingImage{currentClass},2)])
+    T(2*trial-1)=toc;
     outletStream.push_sample(currentClass);     % class label
     pause(trialLength)                          % Pause for trial length
+    T(2*trial)=toc;
     cla                                         % Clear axis
 
     % Display "Next" trial text
@@ -129,7 +133,9 @@ for trial = 1:totalTrials
     
     outletStream.push_sample(endTrial);         % end of trial trigger
 end
-
+T(end)=toc;
+Times=T;
+save(strcat(recordingFolder,'/Times.mat'),'Times');
 %% End of experiment
 outletStream.push_sample(endRecrding);          % end of experiment trigger
 disp('!!!!!!! Stop the LabRecorder recording!');
