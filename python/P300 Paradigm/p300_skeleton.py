@@ -56,7 +56,7 @@ class PreprocessingPipeline:
 class Paradigm:
     """
     This class decides the experiment paradigm. It holds all the information regarding the
-    types of גירויים, the number of classes, trials etc.
+    types of stimulus, the number of classes, trials etc.
     All the things that need to happen during the recording for this paradigm are under this classes
     responsibility (showing a gui, creating events, pushing markers to an active recording, etc.)
     Sublcasses may represent different paradigms such as p300, MI, etc.
