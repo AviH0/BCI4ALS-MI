@@ -28,7 +28,12 @@ class Recorder:
     def start_recording(self):
         pass
 
-    def push_marker(self):
+    def push_marker(self,marker):
+        """
+
+        :param marker:
+        :return:
+        """
         pass
 
     def end_recording(self):
@@ -44,9 +49,10 @@ class PreprocessingPipeline:
     an Epochs object, after preforming filters, cleaning etc.
     Further design of this class can allow subclassing or other forms of modularity, allowing us to easily
     swap different pipelines.
+    filtering, laplacian, re-refrance, ICA
     """
 
-    def __init__(self, config: Config):
+    def __init__(self, config: Config, paradigm: Paradigm):
         pass
 
     def run_pipeline(self, data: mne.io.Raw) -> mne.Epochs:
@@ -60,6 +66,7 @@ class Paradigm:
     All the things that need to happen during the recording for this paradigm are under this classes
     responsibility (showing a gui, creating events, pushing markers to an active recording, etc.)
     Sublcasses may represent different paradigms such as p300, MI, etc.
+    save information about the recording len of trials etc (for the preprocessor)
     """
 
     def __init__(self, config: Config):
@@ -67,6 +74,14 @@ class Paradigm:
 
     def start(self, recorder: Recorder):
         pass
+
+    def __trial_manager(self):
+        """
+        :return:
+        """
+        pass
+
+
 
 
 class P300Paradaigm(Paradigm):
@@ -111,7 +126,7 @@ class Session:
         self.classifier = classifier
         self.config = config
         self.raw_data = None
-        self.epoched_data = None
+        self.epoched_data = None #data after segmentation
 
     def run_all(self):
         pass
