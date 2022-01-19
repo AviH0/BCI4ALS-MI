@@ -1,3 +1,4 @@
+from new_bci_framework.recorder.test import main_test
 from python.new_bci_framework.classifier.base_classifier import BaseClassifier
 from python.new_bci_framework.config.config import Config
 from python.new_bci_framework.paradigm.p300_paradigm import P300Paradaigm
@@ -18,3 +19,4 @@ if __name__ == '__main__':
         config=config
     )
     session.run_all()
+    main_test()

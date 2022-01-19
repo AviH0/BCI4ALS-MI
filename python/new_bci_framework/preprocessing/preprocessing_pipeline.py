@@ -1,3 +1,5 @@
+import mne
+
 from ..config.config import Config
 
 

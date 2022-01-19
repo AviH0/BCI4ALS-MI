@@ -15,7 +15,7 @@ class Recorder:
     def start_recording(self):
         pass
 
-    def push_marker(self):
+    def push_marker(self, marker: float):
         pass
 
     def end_recording(self):
