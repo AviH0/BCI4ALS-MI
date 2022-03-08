@@ -9,7 +9,7 @@ from python.new_bci_framework.session.session import Session
 if __name__ == '__main__':
     config = Config()
 
-    config.SUBJECT_NAME = "TEST_SUBJECT"
+    config.SUBJECT_NAME = input("TEST_SUBJECT")
 
     session = Session(
         recorder=Recorder(config),

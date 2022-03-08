@@ -1,8 +1,10 @@
 from typing import Optional, List
 
 import mne
+from mne.io import RawArray
 from nptyping import NDArray
 
+from .plot_rt_recording import Graph
 from .recorder import Recorder
 import serial.tools.list_ports
 from brainflow import BrainFlowInputParams, BoardShim, BoardIds
@@ -48,8 +50,11 @@ class CytonRecorder(Recorder):
         super().end_recording()
         self.__off()
 
-    def get_raw_data(self) -> mne.io.Raw:
+    def get_raw_data(self) -> RawArray:
         return self.__get_raw_data(self.__get_board_names())
+
+    def plot_live_data(self) -> None:
+        Graph(self.board, self.__get_board_names())
 
     def __find_serial_port(self) -> str:
         """

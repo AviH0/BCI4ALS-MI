@@ -1,6 +1,7 @@
 import mne
 from ..config.config import Config
 
+
 class Recorder:
     """
     Take care of all aspects of recording the eeg data. If any other program need to be opened manually
@@ -22,4 +23,12 @@ class Recorder:
         pass
 
     def get_raw_data(self) -> mne.io.Raw:
+        pass
+
+    def plot_live_data(self) -> None:
+        """
+        Plot the data being captured in real time.
+        Call after recording started.
+        Will execute in its own thread so user can close plot without affecting recording.
+        """
         pass
