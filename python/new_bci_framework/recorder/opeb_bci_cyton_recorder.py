@@ -18,12 +18,17 @@ class CytonRecorder(Recorder):
                  board_id: int = BoardIds.CYTON_DAISY_BOARD.value,
                  ip_port: int = 6677,
                  serial_port: Optional[str] = None,
-                 headset: str = "test_p300"):
+                 headset: str = "cyton"):
         super(CytonRecorder, self).__init__(config)
 
-        # Board Id and Headset Name
-        self.board_id = board_id
+
         self.headset: str = headset
+        self.board_id = board_id
+        # Board Id and Headset Name
+
+        # synthetic headset name
+        if board_id == BoardIds.SYNTHETIC_BOARD:
+            self.headset = 'synth'
 
         # BrainFlowInputParams
         self.params = BrainFlowInputParams()
@@ -76,7 +81,7 @@ class CytonRecorder(Recorder):
 
     def __get_board_names(self) -> List[str]:
         """The method returns the board's channels"""
-        if self.headset == "avi13":
+        if self.headset == "cyton":
             return ['CP2', 'FC2', 'CP6', 'C4', 'C3', 'CP5', 'FC1', 'CP1', 'Cz', 'FC6', 'T8', 'T7', 'FC5']
         else:
             return self.board.get_eeg_names(self.board_id)
