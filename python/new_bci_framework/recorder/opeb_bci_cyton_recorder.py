@@ -1,4 +1,6 @@
-from typing import Optional, List
+import atexit
+import threading
+from typing import Optional, List, Union
 
 import mne
 from mne.io import RawArray
@@ -58,8 +60,14 @@ class CytonRecorder(Recorder):
     def get_raw_data(self) -> RawArray:
         return self.__get_raw_data(self.__get_board_names())
 
-    def plot_live_data(self) -> None:
-        Graph(self.board, self.__get_board_names())
+    def plot_live_data(self, block=True) -> Union[None, threading.Thread]:
+        start_plot = lambda: Graph(self.board, self.__get_board_names())
+        if block:
+            start_plot()
+        else:
+            thread = threading.Thread(target=start_plot)
+            thread.start()
+            return thread
 
     def __find_serial_port(self) -> str:
         """
@@ -82,7 +90,7 @@ class CytonRecorder(Recorder):
     def __get_board_names(self) -> List[str]:
         """The method returns the board's channels"""
         if self.headset == "cyton":
-            return ['CP2', 'FC2', 'CP6', 'C4', 'C3', 'CP5', 'FC1', 'CP1', 'Cz', 'FC6', 'T8', 'T7', 'FC5']
+            return ['C3', 'C4', 'CZ', 'FC1', 'FC2', 'FC5', 'FC6', 'CP1', 'CP2', 'CP5', 'CP6', 'O1', 'O2', '--', '--', '--']
         else:
             return self.board.get_eeg_names(self.board_id)
 
