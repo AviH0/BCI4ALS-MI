@@ -10,13 +10,14 @@ if __name__ == '__main__':
     config = Config()
 
     config.SUBJECT_NAME = input("TEST_SUBJECT")
-
-    session = Session(
-        recorder=Recorder(config),
-        paradigm=P300Paradaigm(config),
-        preprocessor=PreprocessingPipeline(config),
-        classifier=BaseClassifier(config),
-        config=config
-    )
-    session.run_all()
+    paradigm = P300Paradaigm(config)
+    paradigm.start()
+    # session = Session(
+    #     recorder=Recorder(config),
+    #     paradigm=P300Paradaigm(config),
+    #     preprocessor=PreprocessingPipeline(config),
+    #     classifier=BaseClassifier(config),
+    #     config=config
+    # )
+    # session.run_all()
     main_test()
