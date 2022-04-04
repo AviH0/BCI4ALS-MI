@@ -135,7 +135,7 @@ def create_windows(epochs: mne.Epochs, windows=False):
 class Criterion(torch.nn.NLLLoss):
 
     def __init__(self):
-        super(Criterion, self).__init__()
+        super(Criterion, self).create_pseudoRand()
 
     def forward(self, input: Tensor, target: Tensor) -> Tensor:
         # print("input", input, sep='\n')
